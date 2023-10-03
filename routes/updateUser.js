@@ -1,26 +1,29 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (users) => {
-  router.put('/:username', (req, res) => {
-    const username = req.params.username;
-    const { newUsername, newEmail } = req.body;
+// Importez le userController
+const userController = require('../userController');
 
-    if (!newUsername || !newEmail) {
-      return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
-    }
+// Route pour mettre à jour les informations d'un utilisateur
+router.put('/:username', (req, res) => {
+  const username = req.params.username;
+  const { newUsername, newEmail } = req.body;
+  const users = req.users; // Utilisez la variable partagée via le middleware
 
-    const userToUpdate = users.find((user) => user.username === username);
+  // Recherchez l'utilisateur à mettre à jour
+  const userToUpdate = users.find((user) => user.username === username);
 
-    if (!userToUpdate) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
+  if (!userToUpdate) {
+    return res.status(404).json({ error: 'Utilisateur non trouvé' });
+  }
 
-    userToUpdate.username = newUsername;
-    userToUpdate.email = newEmail;
+  // Mettez à jour les informations de l'utilisateur
+  userToUpdate.username = newUsername;
+  userToUpdate.email = newEmail;
 
-    res.json({ success: true, message: 'Utilisateur mis à jour avec succès' });
-  });
-};
+  // Écrivez les données mises à jour dans le fichier users.json (si nécessaire)
+
+  res.json({ success: true, message: 'Utilisateur mis à jour avec succès' });
+});
 
 module.exports = router;

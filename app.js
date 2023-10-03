@@ -1,16 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 
-let users = []; 
+const userController = require('./userController'); // Importez le userController
 
-
+// Middleware global pour partager la variable users avec les routes
 app.use((req, res, next) => {
-  req.users = users;
+  req.users = userController.getUsers();
   next();
 });
 

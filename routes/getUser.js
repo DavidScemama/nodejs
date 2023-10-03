@@ -1,18 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 
-module.exports = (users) => {
-  router.get('/:username', (req, res) => {
-    const username = req.params.username;
-    const user = users.find((user) => user.username === username);
+// Importez le userController
+const userController = require('../userController');
 
-    if (!user) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
+// Route pour obtenir un utilisateur par son nom d'utilisateur
+router.get('/:username', (req, res) => {
+  const username = req.params.username;
+  const users = req.users; // Utilisez la variable partagée via le middleware
 
-    res.json(user);
-  });
-};
+  // Recherchez l'utilisateur dans la liste des utilisateurs
+  const user = users.find((user) => user.username === username);
 
- module.exports = router;
+  if (!user) {
+    return res.status(404).json({ error: 'Utilisateur non trouvé' });
+  }
+
+  res.json(user);
+});
+
+module.exports = router;
