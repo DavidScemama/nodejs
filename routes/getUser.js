@@ -2,18 +2,17 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
+module.exports = (users) => {
+  router.get('/:username', (req, res) => {
+    const username = req.params.username;
+    const user = users.find((user) => user.username === username);
 
-let users = [];
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
 
-router.get('/:username', (req, res) => {
-  const username = req.params.username;
-  const user = users.find((user) => user.username === username);
+    res.json(user);
+  });
+};
 
-  if (!user) {
-    return res.status(404).json({ error: 'Utilisateur non trouvé' });
-  }
-
-  res.json(user);
-});
-
-module.exports = router;
+ module.exports = router;

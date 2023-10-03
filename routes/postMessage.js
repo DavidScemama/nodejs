@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
+module.exports = router.post('/', (req, res) => {
   const message = req.body.message;
 
   if (!message || message.trim() === '') {
@@ -10,5 +10,3 @@ router.post('/', (req, res) => {
 
   res.json({ success: true, message: 'Message posté avec succès' });
 });
-
-module.exports = router;
