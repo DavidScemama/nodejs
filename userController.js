@@ -1,7 +1,7 @@
-let users = []; 
+const userStorage = require('./userStorage');
 
+// Fonctions du contrôleur pour gérer les utilisateurs
 module.exports = {
-  getUsers: () => users,
-  addUser: (user) => users.push(user),
-  // Autres fonctions pour la gestion des utilisateurs
+  getUsers: userStorage.getUsers,
+  addUser: userStorage.addUser,
 };

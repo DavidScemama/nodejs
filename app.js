@@ -5,7 +5,8 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-const userController = require('./userController'); // Importez le userController
+// Importez le userController
+const userController = require('./userController');
 
 // Middleware global pour partager la variable users avec les routes
 app.use((req, res, next) => {

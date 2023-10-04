@@ -25,5 +25,4 @@ module.exports = {
     users.push(user);
     writeUsersToFile(users);
   },
-  // Ajoutez d'autres fonctions nécessaires ici
 };

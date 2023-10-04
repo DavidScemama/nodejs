@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
-// Route pour ajouter un nouvel utilisateur
 router.post('/', (req, res) => {
   const { username, email, password } = req.body;
-  const users = req.users; 
+  const users = req.users;
 
   // Pour valider les données
   if (!username || !email || !password) {
@@ -17,10 +16,10 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: 'Cet utilisateur existe déjà' });
   }
 
-  // Pour ajouter l'utilisateur à la base de données
+  // Pour ajouter l'utilisateur à la bdd
   users.push({ username, email, password });
 
-  // Écrire les données mises à jour dans le fichier users.json
+// Écrire les données mises à jour dans users.json
   fs.writeFileSync('./bdd/users.json', JSON.stringify(users, null, 2));
 
   res.json({ success: true, message: 'Utilisateur ajouté avec succès' });

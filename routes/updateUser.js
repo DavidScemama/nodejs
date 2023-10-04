@@ -1,27 +1,30 @@
 const express = require('express');
 const router = express.Router();
-
-// Importez le userController
-const userController = require('../userController');
+const fs = require('fs');
 
 // Route pour mettre à jour les informations d'un utilisateur
 router.put('/:username', (req, res) => {
   const username = req.params.username;
   const { newUsername, newEmail } = req.body;
-  const users = req.users; // Utilisez la variable partagée via le middleware
+  const users = req.users;
 
-  // Recherchez l'utilisateur à mettre à jour
+  // Pour valider les données
+  if (!newUsername || !newEmail) {
+    return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
+  }
+
   const userToUpdate = users.find((user) => user.username === username);
 
   if (!userToUpdate) {
     return res.status(404).json({ error: 'Utilisateur non trouvé' });
   }
 
-  // Mettez à jour les informations de l'utilisateur
+  // Mettre à jour les informations de l'utilisateur
   userToUpdate.username = newUsername;
   userToUpdate.email = newEmail;
 
-  // Écrivez les données mises à jour dans le fichier users.json (si nécessaire)
+  // Écrire les données mises à jour dans users.json
+  fs.writeFileSync('./bdd/users.json', JSON.stringify(users, null, 2));
 
   res.json({ success: true, message: 'Utilisateur mis à jour avec succès' });
 });
