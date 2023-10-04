@@ -16,7 +16,7 @@ git clone https://github.com/DavidScemama/nodejs.git
 3. Dans le répertoire racine de l'application, exécutez la commande suivante pour installer les dépendances :
 
 ```bash
-npm install
+npm start
 ```
 
 ## Routes API 
